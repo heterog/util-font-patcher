@@ -6,10 +6,10 @@ from datetime import datetime
 from parseOpts import parseOpts
 
 
-def adjust(font, attribute, factor):
+def adjust(font, attribute, factor, tweak=0):
     """Adjust an attribute of a font by a given factor."""
     original = getattr(font, attribute)
-    new = int(getattr(font, attribute) * factor)
+    new = int(getattr(font, attribute) * factor) + tweak
 
     print("Adjusting {}: {} -> {}".format(
         colored(attribute, 'yellow', attrs=['bold']),
@@ -24,10 +24,10 @@ font = fontforge.open(args["input"])
 
 print('')
 for prop in ['os2_winascent', 'os2_typoascent', 'hhea_ascent']:
-    adjust(font, prop, args["factor"])
+    adjust(font, prop, args["factor"], -64)
 
 for prop in ['os2_windescent', 'os2_typodescent', 'hhea_descent']:
-    adjust(font, prop, args["factor"] * 2)
+    adjust(font, prop, args["factor"], -64)
 
 for attr in ['fontname', 'familyname', 'fullname']:
     value = args[attr] or "{} {}".format(getattr(font, attr), args["factor"])
