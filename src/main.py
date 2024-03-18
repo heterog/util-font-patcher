@@ -24,10 +24,12 @@ font = fontforge.open(args["input"])
 
 print('')
 for prop in ['os2_winascent', 'os2_typoascent', 'hhea_ascent']:
-    adjust(font, prop, args["factor"], -64)
+    # top padding
+    adjust(font, prop, args["factor"], -72)
 
 for prop in ['os2_windescent', 'os2_typodescent', 'hhea_descent']:
-    adjust(font, prop, args["factor"], -64)
+    # bottom padding
+    adjust(font, prop, args["factor"], -72)
 
 for attr in ['fontname', 'familyname', 'fullname']:
     value = args[attr] or "{} {}".format(getattr(font, attr), args["factor"])
